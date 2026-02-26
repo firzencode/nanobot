@@ -1,5 +1,14 @@
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
+# Switch apt sources to Aliyun mirror
+RUN rm -f /etc/apt/sources.list.d/debian.sources && \
+    echo "deb http://mirrors.cloud.aliyuncs.com/debian/ bookworm main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.cloud.aliyuncs.com/debian/ bookworm main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.cloud.aliyuncs.com/debian-security/ bookworm-security main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.cloud.aliyuncs.com/debian-security/ bookworm-security main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.cloud.aliyuncs.com/debian/ bookworm-updates main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.cloud.aliyuncs.com/debian/ bookworm-updates main non-free non-free-firmware contrib" >> /etc/apt/sources.list
+
 # Install Node.js 20 for the WhatsApp bridge
 RUN apt-get update && \
     apt-get install -y --no-install-recommends curl ca-certificates gnupg git && \
